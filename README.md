@@ -6,9 +6,11 @@ O sistema foi desenvolvido utilizando a IDE Sprint Tool Suite, aplicando os recu
 ## Arquitetura
 
 São utilizados três serviços oferecidos pelo Spring, para garantir a alta disponibilidade e centralizar o acesso dos serviços distribuídos dentro da arquitetura de microserviços.
+
 •	Config Server – Responsável por distribuir configurações entre os nós do cluster, também é possível criar um webhook no repositório git para disparar um gatilho que irá atualizar os nós do cluster com as alterações commitadas no repositório;
 •	Eureka Server – Responsável por registrar os serviços da aplicação;
 •	Zuul Gateway – Faz o roteamento entre os serviços disponíveis;
+
 Para disponibilizar as aplicações abaixo do Zuul Gateway basta definir as configurações no arquivo properties(ou yml) da aplicação. Para o acesso deve ser utilizada a url do ZuulGateway mais o caminho da aplicação que deseja acessar.
 Ex: http://zuulgateway:8080/admin/dashboard
       http://zuulgateway:8080/secure/auth
@@ -37,7 +39,9 @@ Podemos configurar um Cluster no Docker com toda nossa arquitetura, com fácil e
 ## Montagem de ambiente
 
 Para colocar todo nosso sistema no ar em cluster, é necessário seguir alguns passos de configuração. Este tutorial é um exemplo de configuração em ambiente local.
-Docker swarm
+
+## Docker swarm
+
 Iremos utilizar os recursos do Docker swarm em nosso cluster, assim conseguiremos gerenciar toda a aplicação, iniciar ou parar os nossos serviços que estão rodando nos containers. Na arquitetura do swarm temos um nó chamado ‘manager’ responsável por gerenciar os outros nós de trabalho chamados de ‘worker’, mas isso não quer dizer que o manager não possa rodar algum módulo da nossa aplicação, isso quem decidirá será o próprio swarm.
 Inicialmente precisamos criar as máquinas Docker que representam os nós do nosso cluster.
 
@@ -64,7 +68,9 @@ Execute o comando docker tag nome-imagem localhost:5000/nome-imagem para criar a
 ## Network
 
 Nós sabemos que os nossos microserviços precisam se comunicar entre si. Para isso iremos criar uma rede interna dentro do nosso cluster e ela será definida em nossos serviços para se comunicarem. Crie a rede interna com o comando Docker network create --driver overlay nome-rede. Verifique a rede criada com o comando docker network ls.
-Services
+
+## Services
+
 Agora iremos criar os nossos serviços no nosso cluster. Se tudo foi configurado corretamente até aqui não teremos problemas, pois o mais complicado já foi feito. Utilize o comando 
 docker service create --replicas 1 --name nome-servico --reserve-memory=100mb --publish 8888:8888 --update-delay 10s --network nome-rede localhost:5000/nome-imagem 
 Utilize a rede interna criada no Docker ao definir a network no serviço. Note que o último atributo do comando foi a tag da imagem que foi criada anteriormente. Podemos verificar os serviços que foram criados com o comando docker service ls. Também podemos verificar o status do nosso serviço ou em qual nó ele está executando com o comando docker service ps nome-servico.
