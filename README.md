@@ -40,13 +40,18 @@ Para colocar todo nosso sistema no ar em cluster, é necessário seguir alguns p
 Docker swarm
 Iremos utilizar os recursos do Docker swarm em nosso cluster, assim conseguiremos gerenciar toda a aplicação, iniciar ou parar os nossos serviços que estão rodando nos containers. Na arquitetura do swarm temos um nó chamado ‘manager’ responsável por gerenciar os outros nós de trabalho chamados de ‘worker’, mas isso não quer dizer que o manager não possa rodar algum módulo da nossa aplicação, isso quem decidirá será o próprio swarm.
 Inicialmente precisamos criar as máquinas Docker que representam os nós do nosso cluster.
-Máquinas Docker 
+
+## Máquinas Docker 
+
 Abra as instâncias do power shell que farão referência a cada nó do cluster, como queremos garantir a alta disponibilidade, então criaremos dois manager’s e três workers. 
 Criando as máquinas Docker – Em cada instância do power shell execute o comando docker-machine create nome-maquina,  onde ‘nome-maquina’ deve ser definido o nome da máquina, exemplo: docker-machine create manager, docker-machine create manager1
 Para verificar se as máquinas estão rodando, execute o comando docker-machine ls. Depois que as máquinas estiverem rodando em cada nó do cluster é necessário executar o comando docker-machine env nome-maquina e em seguida execute o comando que o power shell irá indicar. 
+
 Exemplo: & "C:\Program Files\Docker\Docker\Resources\bin\docker-machine.exe" env manager | Invoke-Expression
+
 Isso irá permitir executar os comandos na máquina Docker criada para cada nó.
 Iniciando o swarm – No nosso nó principal, que será o manager deve ser executado o comando docker swarm init  --advertise-addr ip-da-maquina. Este comando iniciará nosso cluster, com este nó definido como manager e apresentará o comando para definir um worker no nosso cluster. Para adicionar mais um manager execute o comando docker swarm join-token manager, e em seguida execute o comando que será apresentado no nó que deseja definir como manager. Para definir os worker’s basta copiar e colar o comando seguindo o mesmo procedimento.
+
 Antes de iniciar nossos serviços dentro dos nós do cluster, precisamos ter as imagens criadas no Docker para cada aplicação. Para criar as imagens é necessário criar o arquivo Dockerfile em cada aplicação. Existem exemplos no diretório citado acima. Dentro do diretório onde se encontra o arquivo Dockerfile e o jar da aplicação (pode ser criado com o  maven), execute o comando  docker build -t nome-imagem . (este último ponto faz parte do comando)
 Verifique as imagens criadas no Docker com o comando docker images.
 
@@ -63,7 +68,9 @@ Services
 Agora iremos criar os nossos serviços no nosso cluster. Se tudo foi configurado corretamente até aqui não teremos problemas, pois o mais complicado já foi feito. Utilize o comando 
 docker service create --replicas 1 --name nome-servico --reserve-memory=100mb --publish 8888:8888 --update-delay 10s --network nome-rede localhost:5000/nome-imagem 
 Utilize a rede interna criada no Docker ao definir a network no serviço. Note que o último atributo do comando foi a tag da imagem que foi criada anteriormente. Podemos verificar os serviços que foram criados com o comando docker service ls. Também podemos verificar o status do nosso serviço ou em qual nó ele está executando com o comando docker service ps nome-servico.
-Portainer
+
+## Portainer
+
 Até agora executamos nossos comandos via linha, pelo power shell. O Portainer é um serviço que nos oferece um dashboard web, onde podemos ter uma visão de tudo o que está acontecendo com nosso cluster, verificar nossos serviços, imagens, subir ou derrubar réplicas entre outas opções úteis para gerenciar nossos containers. Com o comando docker service create --name portainer --publish 9000:9000 --constraint 'node.role == manager' --mount type=bind,src=//var/run/docker.sock,dst=/var/run/docker.sock portainer/portainer -H unix:///var/run/docker.sock, o serviço estará disponível e rodando no cluster, para verificar acesse http://<ip-maquina>:9000/#/init/admin.
 
 Observação:  Esta arquitetura acaba utilizando muitos recursos e memória de uma máquina de desenvolvimento, diminuindo drasticamente a performance da sua máquina. Utilize esta arquitetura em um servidor onde consiga rodar a aplicação sem impacto no desenvolvimento. Para o desenvolvimento podemos iniciar apenas a aplicação que estamos trabalhando se ela não tiver nenhuma dependência, isso vale tanto utilizando o Docker quanto somente o Spring.
