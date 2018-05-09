@@ -1,0 +1,65 @@
+server:
+  port: 8081
+## define se vai utilizar a solução onde authorization server e resource server estão juntos ou separados
+## definir como true, significa que o oauth provider está todo configurado aqui na aplicação bookserver
+## definir como false, significa que essa aplicação só possui configuração para o resource server
+## -> quando está como false, para validar o token é preciso que o authorization server esteja salvando os dados do
+## -> client details em um banco de dados (ao invés de em memória).
+oauth:
+  enabled: true
+  all-in-one: true
+flyway:
+  baseline-on-migrate: true
+  enabled: true
+## configurações do datasource do spring
+spring:
+  application:        
+    name: gkadmin   
+  cloud: 
+    config:           
+      uri: https://configurationserver.herokuapp.com/         
+# REST   
+  data:
+    rest:
+      base-path: rest
+  datasource:
+    url: jdbc:postgresql://ec2-54-225-200-15.compute-1.amazonaws.com:5432/d2knghi8d7vcc4
+    username: kkzfkjnxeglkjx
+    password: 580ae3e1911c7b441de6dbe9e413664bf3d3fa8c342746e1da981a6b69fe2035
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      showSql: true
+      hbm2ddl: true
+      ddlAuto: update
+# JACKSON
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
+jwt:
+  header: Authorization
+  secret: fuckthesystem
+  expiration: 4133901600000
+  route:
+    authentication:
+      path: auth
+      refresh: refresh
+#MANAGEMENT      
+management:
+  security:
+    enabled: false
+eureka:
+  instance:
+    hostname: ${DOMAIN_NAME}
+    non-secure-port: ${server.port}
+    secure-port-enabled: false
+    non-secure-port-enabled: true
+    preferIpAddress: false
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: https://eurekaregisterserver.herokuapp.com/eureka/

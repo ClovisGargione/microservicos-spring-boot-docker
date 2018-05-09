@@ -1,0 +1,19 @@
+server:   
+  port: 8761 
+spring:    
+  profiles: heroku    
+  cloud:   
+    config:           
+      uri: https://configurationserver.herokuapp.com/  
+#MANAGEMENT      
+management:
+  security:
+    enabled: false
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: https://eurekaregisterserver.herokuapp.com/eureka/
+  server:
+    waitTimeInMsWhenSyncEmpty: 0

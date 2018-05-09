@@ -1,0 +1,13 @@
+server.port=8989
+spring.application.name=monitor
+spring.cloud.config.enabled=false
+
+
+##Turbine
+turbine.aggregator.clusterConfig=GATEWAY
+turbine.aggregator.appConfig=gkadmin
+
+turbine.instanceInsertPort=false
+turbine.clusterNameExpression= new String('default')
+turbine.appConfig=gkadmin
+turbine.combineHostPort=true

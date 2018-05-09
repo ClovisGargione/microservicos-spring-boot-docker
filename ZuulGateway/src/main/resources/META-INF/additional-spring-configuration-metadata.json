@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "spring.boot.application.name",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.boot.application.name'"
+  },
+  {
+    "name": "spring.boot.application.name",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.boot.application.name'"
+  },
+  {
+    "name": "spring.boot.cloud.config.enabled",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.boot.cloud.config.enabled'"
+  },
+  {
+    "name": "spring.boot.cloud.config.uri",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.boot.cloud.config.uri'"
+  }
+]}

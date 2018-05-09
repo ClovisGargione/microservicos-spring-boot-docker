@@ -1,0 +1,21 @@
+server:  
+  port: 8888 
+spring:
+  profiles: heroku
+  rabbitmq:
+    addresses: running-scabious-63.bigwig.lshift.net:11096/ZgGFKJM1y7gG
+    port: 11096
+    username: bQTdrzlK
+    password: AJ4KqVnckZk424dkex9xJrY-uVvjr6FA
+  cloud:
+    config:           
+      server:               
+        git:                    
+          uri: https://ClovisGargione@bitbucket.org/ClovisGargione/gk.git
+          clone-on-start: true
+          username: clovis.gargione@gmail.com
+          password: tr0ub4do
+#MANAGEMENT      
+management:
+  security:
+    enabled: false

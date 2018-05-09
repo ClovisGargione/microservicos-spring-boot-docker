@@ -1,0 +1,185 @@
+package com.gkadmin.rest;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.gkadmin.dto.UserDto;
+import com.gkadmin.entity.Authority;
+import com.gkadmin.entity.Users;
+import com.gkadmin.repository.TenantCustomRepository;
+import com.gkadmin.repository.UserCustomRepository;
+import com.gkadmin.repository.UserRepository;
+import com.gkadmin.security.JwtUser;
+import com.gkadmin.service.PasswordService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+
+@RestController
+@RequestMapping(value = "/rest")
+public class UserRest {
+	
+	@Autowired
+	private UserRepository usuarioRepository;
+	
+	@Autowired
+	private TenantCustomRepository tenantCustomRepository;
+	
+	@Autowired
+	private UserCustomRepository userCustomRepository;
+	
+	@PersistenceContext
+	private EntityManager em;
+	
+	@Value("${database.url}")
+	private String DATABASE_URL;
+
+	@HystrixCommand
+	@PostMapping(path="/usuario/novo")
+	@PreAuthorize("hasRole('SUPER_ADMIN')")
+	public ResponseEntity<Object> salvar(@RequestBody Users usuario) {
+		usuario.setPassword(PasswordService.hashPassword(usuario.getPassword()));
+		try {
+			tenantCustomRepository.saveTenant(usuario.getTenantId());
+			userCustomRepository.save(usuario);
+		}catch(Exception e){
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Usuário já existe");
+		}
+		return ResponseEntity.ok(new JwtUser(usuario.getId(), 
+											 usuario.getUsername(), 
+											 usuario.getFirstname(), 
+											 usuario.getLastname(), 
+											 usuario.getPassword(), 
+											 mapToGrantedAuthorities(usuario.getAuthorities()), 
+											 usuario.getEnabled(), 
+											 usuario.getLastPasswordResetDate(),
+											 usuario.getTenantId())); 
+	}
+	
+	@HystrixCommand
+	@PutMapping(path="/usuario/atualizar")
+	@PreAuthorize("hasRole('SUPER_ADMIN')")
+	public ResponseEntity<Object> editar(@RequestBody Users usuario) {
+		try {
+			usuario.setPassword(PasswordService.hashPassword(usuario.getPassword()));
+			usuarioRepository.save(usuario);
+		}catch(Exception e){
+			return ResponseEntity.notFound().build();
+		}
+	
+		return ResponseEntity.ok(new JwtUser(usuario.getId(), 
+				 usuario.getUsername(), 
+				 usuario.getFirstname(), 
+				 usuario.getLastname(), 
+				 usuario.getPassword(), 
+				 mapToGrantedAuthorities(usuario.getAuthorities()), 
+				 usuario.getEnabled(), 
+				 usuario.getLastPasswordResetDate(),
+				 usuario.getTenantId()));
+	}
+	
+	@HystrixCommand(fallbackMethod = "defaultGreeting")
+	@DeleteMapping(path="/usuario/remover/{id}")
+	@PreAuthorize("hasRole('SUPER_ADMIN')")
+	public ResponseEntity<String> salvar(@PathVariable("id")	Long	id) {
+		try {
+			usuarioRepository.delete(id);
+		}catch(Exception e) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.noContent().build();
+	}
+	
+	private String defaultGreeting(String username) {
+        return "Hello User!";
+    }
+	
+	@HystrixCommand
+	@GetMapping(path="/usuario/lista")
+	@PreAuthorize("hasRole('SUPER_ADMIN')")
+	public ResponseEntity<List<Users>> lista(){
+		List<Users> listaDeUsuarios = null;
+		try {
+			listaDeUsuarios = userCustomRepository.usuarios();
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		
+		if(listaDeUsuarios.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		return ResponseEntity.ok(listaDeUsuarios);
+	}
+	
+	@HystrixCommand
+	@GetMapping(path="/usuario/{id}/{tenant}")
+	@PreAuthorize("hasRole('SUPER_ADMIN')")
+	public ResponseEntity<Object> usuario(@PathVariable("id") Long id, @PathVariable("tenant") String tenant){
+		Users usuario = null;
+		try {
+			usuario = userCustomRepository.buscarUsuario(id, tenant);
+		}catch(Exception e) {
+			ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		return ResponseEntity.ok(new UserDto(usuario.getId(), 
+											 usuario.getUsername(), 
+											 usuario.getPassword(), 
+											 usuario.getFirstname(), 
+											 usuario.getLastname(), 
+											 usuario.getEnabled(), 
+											 usuario.getLastPasswordResetDate(), 
+											 mapToGrantedAuthorities(usuario.getAuthorities()),  
+											 usuario.getTenantId()));
+	}
+	
+	@HystrixCommand
+	@GetMapping("/server") 
+	@RefreshScope
+	public	String	user(HttpServletRequest	request)	{	
+		return	DATABASE_URL + ":" + request.getServerName()+":"+request.getServerPort(); 
+	}
+	
+	private static List<GrantedAuthority> mapToGrantedAuthorities(List<Authority> authorities) {
+        return authorities.stream()
+                .map(authority -> new SimpleGrantedAuthority(authority.getName().name()))
+                .collect(Collectors.toList());
+    }
+	
+	private List<JwtUser> montaListaDeUsuariosJwt(List<Users> listaDeUsuarios){
+		List<JwtUser> lista = new ArrayList<>();
+		for (Users users : listaDeUsuarios) {
+			lista.add(new JwtUser(users.getId(), 
+					users.getUsername(), 
+					users.getFirstname(), 
+					users.getLastname(), 
+					users.getPassword(), 
+					mapToGrantedAuthorities(users.getAuthorities()), 
+					users.getEnabled(), 
+					users.getLastPasswordResetDate(),
+					users.getTenantId()));
+			
+		}
+		return lista;
+	}
+}

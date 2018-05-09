@@ -1,0 +1,8 @@
+INDEX VERSION 1.4+/media/clovis/Data/workspace_bicho/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+3433372122.index
+803190952.index
+2996690737.index
+2158722393.index
+2940146539.index
+1487431355.index
+1940232098.index

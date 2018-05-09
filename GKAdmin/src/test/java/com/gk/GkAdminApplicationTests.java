@@ -1,0 +1,18 @@
+package com.gk;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import com.gkadmin.GkAdminApplication;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes=GkAdminApplication.class)
+public class GkAdminApplicationTests {
+
+	@Test
+	public void contextLoads() {
+	}
+
+}

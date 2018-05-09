@@ -1,0 +1,21 @@
+
+	<div class="row col-md-12">
+		<button type="button" class="btn btn-primary"><i class="fa fa-user"></i> Novo usuário</button>
+	</div>
+	<br>
+
+	<div class="card shadow">
+		<h3 class="card-header"><i class="fa fa-users"></i> Usuários</h3>
+		<div class="card-block padding-card">
+			<h4 class="card-title">Usuários cadastrados</h4>
+		<div class="list-group" ng-repeat="usuario in vm.usuarios">
+		  <button type="button" class="list-group-item list-group-item-action" ng-class="{'active': vm.isActive()}">
+		    {{usuario.firstname}} {{usuario.lastname}} 
+		    <h5 class="inline pl-3"><span class="badge badge-info">{{usuario.tenantId}}</span></h5>
+		    <span class="pull-right">
+		    	<i class="fa fa-trash text-danger pointer" data-toggle="tooltip" data-placement="top" title="Remover usuário {{usuario.firstname}}"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/home/edit/{{usuario.id}}/{{usuario.tenantId}}"><i class="fa fa-pencil text-info pointer" data-toggle="tooltip" data-placement="top" title="Editar usuário {{usuario.firstname}}"></i></a>
+		    </span>
+		  </button>
+		</div>
+		</div>
+	</div>

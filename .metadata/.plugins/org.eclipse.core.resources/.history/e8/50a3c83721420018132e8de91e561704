@@ -1,0 +1,23 @@
+server.port=8989
+spring.application.name=monitor
+
+
+eureka.client.enabled=true
+eureka.client.serviceUrl.defaultZone= http://localhost:8761/eureka/
+eureka.client.registerWithEureka= true
+eureka.client.fetchRegistry= false
+eureka.instance.hostname=localhost
+eureka.instance.prefer-ip-address=false
+
+
+eureka.instance.preferIpAddress= true
+eureka.instance.instance-id= ${spring.application.name}:${spring.application.instance_id:${random.value}}
+eureka.client.defaultZone: http://localhost:8761/eureka/
+##Turbine
+
+turbine.clusterNameExpression=default
+turbine.appConfig=gkadmin
+turbine.instanceUrlSuffix.GATEWAY=:8989/hystrix.stream
+
+turbine.ConfigPropertyBasedDiscovery.GATEWAY.instances=localhost
+

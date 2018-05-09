@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;ZuulGateway/src/main/resources/bootstrap-dev.yml&apos; to &apos;application-dev.yml&apos;" description="Rename resource &apos;bootstrap-dev.yml&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/resources/bootstrap-dev.yml" name="application-dev.yml" stamp="1525303942541" updateReferences="true"/>
+</session>

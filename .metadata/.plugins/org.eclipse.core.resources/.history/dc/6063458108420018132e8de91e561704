@@ -1,0 +1,17 @@
+server.port=8989
+spring.application.name=monitor
+spring.cloud.config.enabled=false
+spring.jmx.default-domain=monitor
+spring.cloud.config.uri=http://localhost:8888
+eureka.client.enabled=true
+
+##Turbine
+turbine.aggregator.clusterConfig=GATEWAY
+turbine.aggregator.appConfig=GATEWAY
+
+turbine.instanceInsertPort=false
+turbine.clusterNameExpression= new String('default')
+turbine.appConfig=gkadmin
+turbine.combineHostPort=true
+
+turbine.ConfigPropertyBasedDiscovery.GATEWAY.instances=localhost

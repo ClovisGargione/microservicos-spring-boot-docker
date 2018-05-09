@@ -1,0 +1,11 @@
+server.port=8989
+spring.application.name=turbine.stream
+
+
+eureka.client.enabled=true
+
+##Turbine
+
+turbine.clusterNameExpression=new String("default")
+turbine.appConfig=gkadmin
+

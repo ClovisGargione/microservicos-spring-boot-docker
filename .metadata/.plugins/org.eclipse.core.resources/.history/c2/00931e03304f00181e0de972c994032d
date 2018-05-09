@@ -1,0 +1,110 @@
+/**
+ * 
+ */
+package com.gkadmin.repository;
+
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
+
+import org.flywaydb.core.Flyway;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
+
+import com.gkadmin.entity.Users;
+
+/**
+ * @author clovis
+ *
+ */
+@Repository
+@Transactional
+public class UserCustomRepository {
+	
+	private static final String DEFAULT = "public";
+	@PersistenceContext
+	private EntityManager em;
+	
+	@Autowired
+	private Flyway flyway;
+		
+	@Value("${database.url}")
+	private String DATABASE_URL;
+	
+	@Value("${database.username}")
+	private String USERNAME;
+	
+	@Value("${database.password}")
+	private static String PASSWORD;
+	
+	public Users findByUsername(String username) {
+		
+		TypedQuery<Users> query = em.createQuery("select u from Users u where u.username = :username", Users.class);
+		query.setParameter("username", username);
+		try {
+			Users user = query.getSingleResult();
+			return user;
+		}catch(NoResultException e) {
+			return null;
+		}
+	}
+	
+	public Users save(Users user) {
+		if(!user.getTenantId().equals(DEFAULT)) {
+			flyway.setDataSource(DATABASE_URL, USERNAME, PASSWORD);
+			flyway.setBaselineOnMigrate(true);
+			flyway.setSchemas(user.getTenantId().toLowerCase());
+			flyway.migrate();
+			em.createNativeQuery("set schema '" + user.getTenantId() +"'").executeUpdate();
+		}else{
+			em.createNativeQuery("set schema '" + DEFAULT +"'").executeUpdate();
+		}
+		em.persist(user);
+		return user;
+		
+	}
+	
+	public List<Users> usuarios(){
+		Query query = em.createNativeQuery("(select * from master.users) union (select * from public.users)");
+		@SuppressWarnings("unchecked")
+		List<Object[]> lista = query.getResultList();
+		List<Users> usuarios = montaListaObjetoUsuario(lista);
+		usuarios.sort(Comparator.comparing(Users::getTenantId));
+		return usuarios;
+	}
+	
+	public Users buscarUsuario(Long id, String tenant) {
+		em.createNativeQuery("set schema '" + tenant +"'").executeUpdate();
+		Users user = em.find(Users.class, id);
+		em.createNativeQuery("set schema '" + DEFAULT +"'").executeUpdate();
+		return user;
+	}
+	
+	private List<Users> montaListaObjetoUsuario(List<Object[]> lista) {
+		List<Users> usuarios = new ArrayList<>();
+		for(Object[] object : lista) {
+			Users users = new Users();
+			BigInteger id = (BigInteger) object[0];
+			users.setId(id.longValue());
+			users.setEnabled((Boolean) object[1]);
+			users.setFirstname((String) object[2]);
+			users.setLastPasswordResetDate((Date) object[3]);
+			users.setLastname((String) object[4]);
+			users.setUsername((String) object[6]);
+			users.setTenantId((String) object[7]);
+			usuarios.add(users);
+		}
+		return usuarios;
+	}
+	
+}

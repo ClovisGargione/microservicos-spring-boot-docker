@@ -1,0 +1,52 @@
+{"properties": [
+  {
+    "name": "oauth.enabled",
+    "type": "java.lang.String",
+    "description": "A description for 'oauth.enabled'"
+  },
+  {
+    "name": "oauth.all-in-one",
+    "type": "java.lang.String",
+    "description": "A description for 'oauth.all-in-one'"
+  },
+  {
+    "name": "spring.jpa.hibernate.dialect",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.jpa.hibernate.dialect'"
+  },
+  {
+    "name": "spring.jpa.hibernate.show-sql",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.jpa.hibernate.show-sql'"
+  },
+  {
+    "name": "spring.jpa.hibernate.hbm2ddl",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.jpa.hibernate.hbm2ddl'"
+  },
+  {
+    "name": "jwt.header",
+    "type": "java.lang.String",
+    "description": "A description for 'jwt.header'"
+  },
+  {
+    "name": "jwt.secret",
+    "type": "java.lang.String",
+    "description": "A description for 'jwt.secret'"
+  },
+  {
+    "name": "jwt.expiration",
+    "type": "java.lang.String",
+    "description": "A description for 'jwt.expiration'"
+  },
+  {
+    "name": "jwt.route.authentication.path",
+    "type": "java.lang.String",
+    "description": "A description for 'jwt.route.authentication.path'"
+  },
+  {
+    "name": "jwt.route.authentication.refresh",
+    "type": "java.lang.String",
+    "description": "A description for 'jwt.route.authentication.refresh'"
+  }
+]}

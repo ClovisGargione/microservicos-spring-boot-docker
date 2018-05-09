@@ -1,0 +1,37 @@
+<div ng-include="'modules/navbar/views/mobile/navbarMob.html'"></div>
+<div ng-include="'modules/navbar/views/desktop/navbarXl.html'"></div>
+
+
+<div class="w-100" style="margin-top: 70px;">
+	<div class="row-offcanvas row-offcanvas-left">
+		<!-- sidebar -->
+		<div class="sidebar-offcanvas pl-0 m-1 d-none d-lg-block" id="sidebar">
+			<ul class="nav nav-stacked" id="menu">
+				<li class="nav-item w-100" id="menu-1" ng-click="vm.setActive('menu-1')" ng-class="{'menu-active':vm.isActive('menu-1')}"><a class="nav-link black" href="#!/home/dashboard"><i
+						class="fa fa-list-alt"></i> <span
+						class="collapse in hidden-xs-down">Link 1</span></a></li>
+				<li class="nav-item w-100" id="menu-2" ng-click="vm.setActive('menu-2')" ng-class="{'menu-active':vm.isActive('menu-2')}"><a class="nav-link black" href="#!/home/dashboard"><i
+						class="fa fa-list"></i> <span class="collapse in hidden-xs-down">Link
+							2</span></a></li>
+				<li class="nav-item w-100"><a class="nav-link black" href="#"><i
+						class="fa fa-paperclip"></i> <span
+						class="collapse in hidden-xs-down">Saved</span></a></li>
+				<li class="nav-item w-100"><a class="nav-link black" href="#"><i
+						class="fa fa-refresh"></i> <span
+						class="collapse in hidden-xs-down">Refresh</span></a></li>
+			</ul>
+		</div>
+
+		<!-- /sidebar -->
+
+		<!-- main right col -->
+		<div class="w-100" id="main">
+
+			<hr>
+			<div class="wrapper">
+				<div ui-view></div>
+			</div>
+		</div>
+		<!-- /main -->
+	</div>
+</div>

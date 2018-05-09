@@ -1,0 +1,13 @@
+server.port=8989
+spring.application.name=monitor
+
+management.security.enabled=false
+spring.cloud.config.enabled=false
+
+eureka.client.enabled=true
+
+##Turbine
+
+turbine.instanceInsertPort=false
+turbine.clusterNameExpression= new String("default")
+turbine.appConfig=gkadmin

@@ -1,0 +1,31 @@
+server:
+  port: 8989
+info:
+  component: Turbine
+
+PREFIX:
+  
+endpoints:
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+management:
+  port: 8990
+
+logging:
+  level:
+    root: INFO
+    com.netflix.discovery: 'OFF'
+    # org.springframework.integration: DEBUG
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+turbine:
+  app-config: gkadmin
+  aggregator:
+    clusterConfig: gkadmin
+spring:
+  profiles: cloud

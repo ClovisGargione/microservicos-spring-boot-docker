@@ -1,0 +1,17 @@
+server:
+  port: 8989
+spring:
+  application:
+    name: turbine.stream
+  cloud:
+    config:
+      uri: http://localhost:8888  
+turbine:
+  app-config: gkadmin
+  cluster-name-expression: new String("default")
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

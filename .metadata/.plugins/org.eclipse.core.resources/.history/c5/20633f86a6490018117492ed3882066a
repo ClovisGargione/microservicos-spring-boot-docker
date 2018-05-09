@@ -1,0 +1,32 @@
+server:   
+  port: 8080 
+spring:
+  boot:
+    admin:
+      url: http://admin:8181    
+  application:        
+    name: gateway   
+  cloud:        
+    config:           
+      uri: https://configurationserver.herokuapp.com/    
+zuul:
+  Is-Secure: true
+  ignoredServices: '*'
+  sensitiveHeaders:
+  routes:       
+    gk:           
+      path: /app/**
+      service-id: gk
+    gkadmin:
+      path: /admin/**
+      service-id: gkadmin
+#MANAGEMENT      
+management:
+  security:
+    enable: false
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: https://eurekaregisterserver.herokuapp.com/eureka/

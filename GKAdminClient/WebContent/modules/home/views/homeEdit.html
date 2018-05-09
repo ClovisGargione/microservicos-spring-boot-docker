@@ -1,0 +1,77 @@
+
+<div class="card shadow">
+		<h3 class="card-header"><i class="fa fa-user"></i> Usuário</h3>
+		<div class="card-block padding-card">
+			<h4 class="card-title">Usuário cadastrado</h4>
+			<form id="usuarioform" name="usuarioform" role="form" novalidate>
+		 		<div class="row">
+					<div class="col-6">
+						<div class="form-group">
+							<label for="inputLogin">Nome</label>
+							<div class="input-group">
+								<input type="text" ng-model="vm.usuario.firstname"
+									class="form-control" id="inputNomeUsuario" name="inputNomeUsuario"
+									aria-describedby="usuarioHelp" placeholder="Informe o nome"
+									ng-class="{'is-invalid': usuarioform.inputNomeUsuario.$dirty && usuarioform.inputNomeUsuario.$invalid}"
+									required>
+								<div class="invalid-feedback">Nome é obrigatório.</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form-group">
+							<label for="inputLogin">Sobrenome</label>
+							<div class="input-group">
+								<input type="text" ng-model="vm.usuario.lastname"
+									class="form-control" id="inputSobrenomeUsuario" name="inputSobrenomeUsuario"
+									aria-describedby="usuarioHelp" placeholder="Informe o sobrenome"
+									ng-class="{'is-invalid': usuarioform.inputSobrenomeUsuario.$dirty && usuarioform.inputSobrenomeUsuario.$invalid}"
+									required>
+								<div class="invalid-feedback">Sobrenome é obrigatório.</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">
+						<div class="form-group">
+							<label for="inputLogin">Usuário</label>
+							<div class="input-group">
+								<input type="text" ng-model="vm.usuario.username"
+									class="form-control" id="inputUsuarioNome" name="inputUsuarioNome"
+									aria-describedby="usuarioHelp" placeholder="Informe o usuário"
+									ng-class="{'is-invalid': usuarioform.inputUsuarioNome.$dirty && usuarioform.inputUsuarioNome.$invalid}"
+									required>
+								<div class="invalid-feedback">Usuário é obrigatório.</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form-group">
+							<label for="inputLogin">Perfis de acesso</label><br>
+							<div class="btn-group btn-group-toggle" role="group" ng-repeat="perfil in vm.perfis" data-toggle="buttons">
+							  <label class="btn" ng-click="vm.selecionaPerfil(perfil.id)" ng-class="{'active': vm.existeNoPerfil(perfil.id), 'btn-light': perfil.id == 'ROLE_USER', 'btn-warning': perfil.id == 'ROLE_ADMIN', 'btn-danger': perfil.id == 'ROLE_SUPER_ADMIN'}">
+							    <input type="checkbox" autocomplete="off"> {{perfil.label}}
+							  </label>
+							</div>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form-group">
+							<label for="inputLogin">Última alteração de senha</label><br>
+							<div class="input-group">
+							<datepicker date-format="dd/MM/yyyy">
+							 	<input type="text" ng-model="vm.dataAlteracaoSenha" datetimepicker
+									class="form-control" id="inputUsuarioDataTrocaSenha" name="inputUsuarioDataTrocaSenha"
+									aria-describedby="usuarioHelp" placeholder="Informe a última data de alteração"
+									ng-class="{'is-invalid': usuarioform.inputUsuarioDataTrocaSenha.$dirty && usuarioform.inputUsuarioDataTrocaSenha.$invalid}"
+									required>
+								<div class="invalid-feedback">Usuário é obrigatório.</div>
+							</datepicker>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>

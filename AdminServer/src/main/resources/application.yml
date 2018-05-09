@@ -1,0 +1,27 @@
+server:
+  port: 8181
+spring:
+  mail:
+    protocol: smtp
+    port: 465
+    smtp:
+      auth: true
+      debug: true
+      starttls:
+        enable: true
+        required: true
+      socketFactory:
+        port: 465
+        fallback: false
+    host: smtp.gmail.com
+    username: gmail@gmail.com
+    password: xxxxx
+    from: gmail@gmail.com
+  boot:
+    admin:
+      notify:
+        mail: 
+          to: gmail@gmail.com
+      routes:
+        endpoints: env, metrics, trace, jolokia, info, configprops
+  

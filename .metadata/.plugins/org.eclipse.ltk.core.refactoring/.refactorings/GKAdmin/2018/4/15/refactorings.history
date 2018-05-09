@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;GKAdmin/src/main/resources/application-client1.yml&apos; to &apos;application-dev.yml&apos;" description="Rename resource &apos;application-client1.yml&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/resources/application-client1.yml" name="application-dev.yml" stamp="1523582869799" updateReferences="true"/>
+</session>

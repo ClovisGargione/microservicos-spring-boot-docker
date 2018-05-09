@@ -1,0 +1,18 @@
+server:  
+  port: 8888 
+spring:
+  profiles: heroku
+  rabbitmq:
+    host: bigwig.lshift.net
+    port: 183574
+    username: bQTdrzlK
+    password: AJ4KqVnckZk424dkex9xJrY-uVvjr6FA
+  cloud:
+    config:           
+      server:               
+        git:                    
+          uri: https://ClovisGargione@bitbucket.org/ClovisGargione/gk.git
+#MANAGEMENT      
+management:
+  security:
+    enabled: false

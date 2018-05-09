@@ -1,0 +1,20 @@
+server:  
+  port: 8888 
+spring:
+  profiles: heroku
+  rabbitmq:
+    port: 11096
+    username: xxxx
+    password: xxx-xxxx
+  cloud:
+    config:           
+      server:               
+        git:                    
+          uri: https://ClovisGargione@bitbucket.org/ClovisGargione/gk.git
+          clone-on-start: true
+          username: gmail@gmail.com
+          password: xxxxxx
+#MANAGEMENT      
+management:
+  security:
+    enabled: false

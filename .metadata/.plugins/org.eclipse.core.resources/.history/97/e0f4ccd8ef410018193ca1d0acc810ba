@@ -1,0 +1,4 @@
+server.port=8989
+spring.application.name=turbine.stream
+turbine.app-config=gk, gkadmin
+turbine.cluster-name-expression=new String("default")

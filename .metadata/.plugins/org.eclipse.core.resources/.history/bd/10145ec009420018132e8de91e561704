@@ -1,0 +1,21 @@
+server.port=8989
+spring.application.name=monitor
+
+management.security.enabled=false
+spring.cloud.config.enabled=false
+spring.jmx.default-domain=monitor
+
+eureka.client.enabled=true
+
+##Turbine
+turbine.aggregator.clusterConfig=GATEWAY
+turbine.aggregator.appConfig=GATEWAY
+
+turbine.instanceInsertPort=false
+turbine.clusterNameExpression= new String('default')
+turbine.appConfig=gkadmin
+turbine.combineHostPort=true
+
+turbine.instanceUrlSuffix.GATEWAY=:8989/gateway/hystrix.stream
+
+turbine.ConfigPropertyBasedDiscovery.GATEWAY.instances=localhost

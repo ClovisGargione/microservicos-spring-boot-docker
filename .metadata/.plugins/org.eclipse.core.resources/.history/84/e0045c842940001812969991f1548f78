@@ -1,0 +1,23 @@
+server:   
+  port: 8761 
+spring: 
+  boot:
+    admin:
+      url: http://admin:8181     
+  application:        
+    name: server    
+  cloud:   
+    inetutils:
+      preferred-networks:
+        - 10.0     
+    config:           
+      uri: http://configserver:8888 
+#MANAGEMENT      
+management:
+  security:
+    enabled: false
+eureka:
+  instance:
+    hostname: eureka
+    preferIpAddress: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}

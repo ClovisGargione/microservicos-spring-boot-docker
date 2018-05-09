@@ -1,0 +1,15 @@
+server:  
+  port: 8888 
+spring:
+  profiles: heroku
+  rabbitmq:
+    host: amqp://bQTdrzlK:AJ4KqVnckZk424dkex9xJrY-uVvjr6FA@running-scabious-63.bigwig.lshift.net:11097/ZgGFKJM1y7gG
+  cloud:
+    config:           
+      server:               
+        git:                    
+          uri: https://ClovisGargione@bitbucket.org/ClovisGargione/gk.git
+#MANAGEMENT      
+management:
+  security:
+    enabled: false

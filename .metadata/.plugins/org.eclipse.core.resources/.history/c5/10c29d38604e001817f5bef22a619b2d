@@ -1,0 +1,19 @@
+server:   
+  port: 8761 
+spring:
+  profiles: dev
+  boot:
+    admin:
+      url: http://localhost:8181     
+  application:        
+    name: eurekaserver    
+  cloud:        
+    config:           
+      uri: http://localhost:8888 
+#MANAGEMENT      
+management:
+  security:
+    enabled: false
+eureka:
+  instance:
+    hostname: eureka

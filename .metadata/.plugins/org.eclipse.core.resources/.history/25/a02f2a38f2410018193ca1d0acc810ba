@@ -1,0 +1,10 @@
+server:
+  port: 8989
+spring:
+  application:
+    name: turbine.stream
+turbine:
+  app-config: gkadmin
+turbine:
+  cluster-name-expression: new String("default")
+spring.cloud.config.uri= http://localhost:8888  

@@ -1,0 +1,44 @@
+server:   
+  port: 8080 
+spring:
+  profiles: docker
+  boot:
+    admin:
+      url: http://admin:8181
+  cloud:        
+    config:           
+      uri: http://configserver:8888    
+ribbon: 
+  ConnectTimeout: 30000
+  ReadTimeout: 990000
+  maxAutoRetries: 1
+  MaxAutoRetriesNextServer: 2
+  eureka:
+    enabled: true     
+zuul:
+  ignoredServices: '*'
+  sensitiveHeaders:
+  routes:       
+    gk:           
+      path: /app/**
+      service-id: gk
+    gkadmin:
+      path: /admin/**
+      service-id: gkadmin
+#MANAGEMENT      
+management:
+  security:
+    enabled: false
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://eurekaserver:8761/eureka/
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 90000

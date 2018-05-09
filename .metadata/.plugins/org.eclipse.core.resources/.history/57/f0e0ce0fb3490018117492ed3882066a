@@ -1,0 +1,20 @@
+server:  
+  port: 8888 
+spring:   
+  boot:
+    admin:
+      url: http://locahlhost:8181  
+  rabbitmq:
+    host: 192.168.0.10
+    port: 5672
+    username: admin
+    password: admin
+  cloud:        
+    config:           
+      server:               
+        git:                    
+          uri:  C:/workspace_estudos/config-repo
+#MANAGEMENT      
+management:
+  security:
+    enabled: false

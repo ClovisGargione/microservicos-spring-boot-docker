@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="false" key="isRegEx"/>
+		<item value="ngDatepicker" key="selection"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="incremental"/>
+		<item value="true" key="wrap"/>
+		<item value="false" key="wholeword"/>
+		<list key="findhistory">
+			<item value="ngDatepicker"/>
+			<item value="CLAIM_KEY_CREATED"/>
+			<item value="CLAIM_KEY_USERNAME"/>
+			<item value="inter"/>
+			<item value="usuariosService"/>
+			<item value="loadModule"/>
+			<item value="defineErrorMessage"/>
+			<item value="mostrarMensagemDeErro"/>
+			<item value="$scope"/>
+			<item value="row-offcanvas"/>
+			<item value="loginformMobile"/>
+			<item value="UNAUTHORIZED"/>
+			<item value="No module found during bootstrap, "/>
+			<item value="$auth"/>
+			<item value="actu"/>
+		</list>
+		<list key="replacehistory">
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="326" key="DIALOG_WIDTH"/>
+		<item value="1|Noto Sans|9.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
+		<item value="427" key="DIALOG_HEIGHT"/>
+		<item value="449" key="DIALOG_X_ORIGIN"/>
+		<item value="301" key="DIALOG_Y_ORIGIN"/>
+	</section>
+</section>

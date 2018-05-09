@@ -1,0 +1,122 @@
+
+<div class="d-none d-lg-block embed-responsive-item container h-100">
+	<div class="row align-items-center h-100">
+		<div class="col-4 mx-auto">
+			<div class="embed-responsive-item jumbotron">
+				<h1 class="text-center">Pica-Pau</h1>
+				<form id="loginform" name="loginform" role="form" novalidate>
+					<div class="form-group">
+						<label for="inputLogin">Usuário</label>
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"> <i class="fa fa-user fa"
+									aria-hidden="true"></i>
+								</span>
+							</div>
+							<input type="text" ng-model="vm.obj.username"
+								class="form-control" id="inputlogin" name="inputlogin"
+								aria-describedby="loginHelp" placeholder="Informe o usuário"
+								ng-class="{'is-invalid': loginform.inputlogin.$dirty && loginform.inputlogin.$invalid}"
+								required>
+							<div class="invalid-feedback">Usuário é obrigatório.</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputSenha">Senha</label>
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"> <i class="fa fa-lock fa"
+									aria-hidden="true"></i>
+								</span>
+							</div>
+							<input type="password" class="form-control" id="inputpassword"
+								name="inputpassword" placeholder="Informe a senha"
+								ng-model="vm.obj.password"
+								ng-class="{'is-invalid': loginform.inputpassword.$dirty && loginform.inputpassword.$invalid}"
+								required>
+							<div class="invalid-feedback">Senha é obrigatório.</div>
+						</div>
+
+					</div>
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="lembrarCheck"
+							ng-model="vm.obj.remember"> <label
+							class="form-check-label" for="lembrarCheck">Lembrar-me</label>
+					</div>
+					<button type="button" ng-click="vm.login(vm.obj)"
+						class="btn btn-primary btn-block" ng-disabled="loginform.$invalid">
+						<i class="{{vm.icon}}"></i> Entrar
+					</button>
+					<small id="emailHelp" class="form-text text-muted">Nunca
+						compartilhe suas crendenciais</small>
+					<div class="alert alert-danger" role="alert"
+						ng-if="vm.errorMessage.show">
+						<small>{{vm.errorMessage.message}}</small>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- MOBILE -->
+<div class="d-lg-none d-xl-none embed-responsive-item container h-100">
+	<div class="row align-items-center h-100">
+		<div class="col-10 mx-auto">
+			<div class="embed-responsive-item jumbotron">
+				<h1 class="text-center">Pica-Pau</h1>
+				<form id="loginformMobile" name="loginformMobile" ng-submit="vm.login(vm.objM)" role="form" novalidate>
+					<div class="form-group">
+						<label for="inputLogin">Usuário</label>
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"> <i class="fa fa-user fa"
+									aria-hidden="true"></i>
+								</span>
+							</div>
+							<input type="text" class="form-control" id="inputLoginMobile"
+								ng-model="vm.objM.username" name="inputLoginMobile"
+								aria-describedby="loginHelp" placeholder="Informe o usuário"
+								ng-class="{'is-invalid': loginformMobile.inputLoginMobile.$dirty && loginformMobile.inputLoginMobile.$invalid}"
+								required>
+							<div class="invalid-feedback">Usuário é obrigatório.</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputSenha">Senha</label>
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"> <i class="fa fa-lock fa"
+									aria-hidden="true"></i>
+								</span>
+							</div>
+							<input type="password" class="form-control" id="inputSenhaMobile"
+								name="inputSenhaMobile" ng-model="vm.objM.password"
+								placeholder="Informe a senha"
+								ng-class="{'is-invalid': loginformMobile.inputSenhaMobile.$dirty && loginformMobile.inputSenhaMobile.$invalid}"
+								required>
+							<div class="invalid-feedback">Senha é obrigatório.</div>
+						</div>
+					</div>
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input"
+							id="lembrarCheckMobile" ng-model="vm.objM.remember"> <label
+							class="form-check-label" for="lembrarCheckMobile">Lembrar-me</label>
+					</div>
+					<button type="submit"
+						class="btn btn-primary btn-block"
+						ng-disabled="loginformMobile.$invalid">
+						<i class="{{vm.icon}}"></i> Entrar</button>
+					<small id="emailHelp" class="form-text text-muted">Nunca
+						compartilhe suas crendenciais</small>
+					<div class="alert alert-danger" role="alert"
+						ng-if="vm.errorMessage.show">
+						<small>{{vm.errorMessage.message}}</small>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+

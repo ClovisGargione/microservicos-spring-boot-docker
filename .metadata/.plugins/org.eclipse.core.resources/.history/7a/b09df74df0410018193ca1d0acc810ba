@@ -1,0 +1,13 @@
+server.port=8989
+spring.application.name=turbine.stream
+turbine.app-config=gk, gkadmin
+turbine.cluster-name-expression=new String("default")
+eureka:
+  instance:
+    preferIpAddress: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    registerWithEureka: true
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

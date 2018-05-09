@@ -1,0 +1,71 @@
+server:
+  port: 0
+## define se vai utilizar a solução onde authorization server e resource server estão juntos ou separados
+## definir como true, significa que o oauth provider está todo configurado aqui na aplicação bookserver
+## definir como false, significa que essa aplicação só possui configuração para o resource server
+## -> quando está como false, para validar o token é preciso que o authorization server esteja salvando os dados do
+## -> client details em um banco de dados (ao invés de em memória).
+oauth:
+  enabled: true
+  all-in-one: true
+flyway:
+  baseline-on-migrate: true
+  enabled: true
+## configurações do datasource do spring
+spring:
+  profiles: docker
+  boot:
+    admin:
+      url: http://admin:8181  
+  cloud: 
+    inetutils:
+      preferred-networks:
+        - 10.0         
+    config:           
+      uri: http://configserver:8888          
+  rabbitmq:
+    host: 192.168.15.10
+    port: 5672
+    username: admin
+    password: admin
+# REST   
+  data:
+    rest:
+      base-path: rest
+  datasource:
+    url: jdbc:postgresql://192.168.0.10:5432/postgres
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      showSql: true
+      hbm2ddl: true
+      ddlAuto: update
+# JACKSON
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
+jwt:
+  header: Authorization
+  secret: fuckthesystem
+  expiration: 4133901600000
+  route:
+    authentication:
+      path: auth
+      refresh: refresh
+#MANAGEMENT      
+management:
+  security:
+    enabled: false
+eureka:
+  instance:
+    preferIpAddress: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    registerWithEureka: true
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://eurekaserver:8761/eureka/

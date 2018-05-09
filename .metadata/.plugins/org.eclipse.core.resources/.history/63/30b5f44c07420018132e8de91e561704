@@ -1,0 +1,15 @@
+server.port=8989
+spring.application.name=monitor
+spring.cloud.config.enabled=true
+spring.jmx.default-domain=monitor
+
+eureka.client.enabled=true
+
+##Turbine
+turbine.aggregator.clusterConfig=GATEWAY
+turbine.aggregator.appConfig=GATEWAY
+
+turbine.instanceInsertPort=false
+turbine.clusterNameExpression= new String('default')
+turbine.appConfig=gkadmin
+turbine.combineHostPort=true

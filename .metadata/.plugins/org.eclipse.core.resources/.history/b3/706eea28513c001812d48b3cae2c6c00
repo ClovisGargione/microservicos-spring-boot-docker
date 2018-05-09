@@ -1,0 +1,22 @@
+server:   
+  port: 8080 
+spring:
+ boot:
+  admin:
+    url: http://localhost:8181    
+  application:        
+    name: gateway   
+  cloud:        
+    config:           
+      uri:  http://localhost:8888           
+zuul:
+  sensitiveHeaders:    
+  routes:       
+    jwtsecurity:           
+      path: /admin/**
+    cupom:
+      path: /app/**
+#MANAGEMENT      
+management:
+  security:
+    enabled: false
