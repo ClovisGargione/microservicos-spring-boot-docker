@@ -56,6 +56,7 @@ Para verificar se as máquinas estão rodando, execute o comando docker-machine 
 Exemplo: & "C:\Program Files\Docker\Docker\Resources\bin\docker-machine.exe" env manager | Invoke-Expression
 
 Isso irá permitir executar os comandos na máquina Docker criada para cada nó.
+
 Iniciando o swarm – No nosso nó principal, que será o manager deve ser executado o comando docker swarm init  --advertise-addr ip-da-maquina. Este comando iniciará nosso cluster, com este nó definido como manager e apresentará o comando para definir um worker no nosso cluster. Para adicionar mais um manager execute o comando docker swarm join-token manager, e em seguida execute o comando que será apresentado no nó que deseja definir como manager. Para definir os worker’s basta copiar e colar o comando seguindo o mesmo procedimento.
 
 Antes de iniciar nossos serviços dentro dos nós do cluster, precisamos ter as imagens criadas no Docker para cada aplicação. Para criar as imagens é necessário criar o arquivo Dockerfile em cada aplicação. Existem exemplos no diretório citado acima. Dentro do diretório onde se encontra o arquivo Dockerfile e o jar da aplicação (pode ser criado com o  maven), execute o comando  docker build -t nome-imagem . (este último ponto faz parte do comando)
