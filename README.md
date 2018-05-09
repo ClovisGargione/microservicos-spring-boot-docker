@@ -7,11 +7,11 @@ O sistema foi desenvolvido utilizando a IDE Sprint Tool Suite, aplicando os recu
 
 São utilizados três serviços oferecidos pelo Spring, para garantir a alta disponibilidade e centralizar o acesso dos serviços distribuídos dentro da arquitetura de microserviços. 
 
-•	Config Server – Responsável por distribuir configurações entre os nós do cluster, também é possível criar um webhook no repositório git para disparar um gatilho que irá atualizar os nós do cluster com as alterações commitadas no repositório;  
+   •	Config Server – Responsável por distribuir configurações entre os nós do cluster, também é possível criar um webhook no      repositório git para disparar um gatilho que irá atualizar os nós do cluster com as alterações commitadas no                  repositório;  
      
-•	Eureka Server – Responsável por registrar os serviços da aplicação;  
+   •	Eureka Server – Responsável por registrar os serviços da aplicação;  
       
-•	Zuul Gateway – Faz o roteamento entre os serviços disponíveis;  
+   •	Zuul Gateway – Faz o roteamento entre os serviços disponíveis;  
       
 Para disponibilizar as aplicações abaixo do Zuul Gateway basta definir as configurações no arquivo properties(ou yml) da aplicação. Para o acesso deve ser utilizada a url do ZuulGateway mais o caminho da aplicação que deseja acessar.
 Ex: http://zuulgateway:8080/admin/dashboard
