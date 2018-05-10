@@ -1,0 +1,172 @@
+====================Comandos Docker====================
+
+#Adicionar o docker ao super usuário (para não precisar utilizar o comando sudo toda hora)
+$ sudo usermod -aG docker infoslack
+
+#Executar uma imagem como container
+$ docker run <nome_imagem> <comando_opcional> <argumentos_opcional>
+
+#Listar todos os processos
+$ docker ps
+
+#Iniciar um container utilizando as opções de interatividade (-i) e linkar ao terminal (-t) - Utilize este comando para navegar e explorar pastas dentro do container!
+$ docker run -i -t <nome_imagem> <comando_opcional>
+
+#Listar todos os containers que foram iniciados ou pausados
+$ docker ps -a
+
+#Listar apenas o ID todos os containers que foram iniciados ou pausados
+$ docker ps -qa
+
+#Informa em tempo de execução, detalhes sobre o nível de consumo de recursos da máquina host
+$ docker stats <ID_CONTAINER>
+
+#Listar todas as imagens
+$ docker images
+
+#Remover um container
+$ docker rm <ID_CONTAINER>
+
+#Iniciar um container com um nome definido (comando -it é o mesmo citado acima)
+$ docker run -it --name <nome_container> <nome_imagem>
+
+#Commitar um container - isso salva o estado atual do container na imagem utilizada na criação, criando uma nova imagem com as alterações
+$ docker commit <id_container> <nome_imagem>
+
+#Destruir container ao finalizar sua execução com o comando --rm (comando -it já visto acima pelo amor né) 
+$ docker run  -it --rm <nome_imagem> <comando_opcional>
+
+#Inciar container mapeando porta para o host com o comando -p estabelecendo uma conexão entre elas
+$ docker run -it --rm -p 8080:8080 <nome_imagem> <comando_opcional>
+
+#Executar container em background com o comando -d
+$ docker run -d -p 8080:8080 <nome_imagem> <comando_opcional>
+
+#Listar o ID de todos os containers em execução
+$ docker ps -q
+
+#Parar um container
+$ docker stop <ID_CONTAINER>
+
+#Iniciar um container
+$ docker start <ID_CONTAINER>
+
+#Apagar uma imagem
+$ docker rmi <ID_IMAGEM>
+
+#Apagar	todos os containers e imagens de uma só vez
+$ docker rm $(docker ps -qa)
+
+#Apagar	todas as imagens de uma só vez
+$ docker rmi $(docker images -q)
+
+#Permitir que o docker faça o mapeamento de qualquer porta utilizada no container para alguma porta no host com o comando -P
+$ docker run -d -P <nome_imagem> <comando_opcional>
+
+#Conferir porta mapeada do container para o host
+$ docker port <ID_CONTAINER>
+
+#Inspecionar container
+$ docker inspect <ID_CONTAINER>
+
+#Inspecionar container filtrando pelo ip utilizando o grep
+$ docker inspect <id_container> | grep IPAddress "IPAddress": "<ip>"
+
+#Verificar informações de rede do container
+$ docker exec -it <id_container> ifconfig eth0
+
+#Acessar container para navegar nos diretórios
+$ docker exec -it <nome_imagem> <comando_opcional>
+
+#Listar logs do container
+$ docker logs <id_container>
+
+#Exportar container em execução (primeiro é necessário realizar o commit do container)
+$ docker save nova_imagem > <destino/nova_imagem.tar>
+
+#Importar container 
+$docker load < <destino/imagem.tar>
+
+===================================Volumes=========================================
+
+#Iniciar um container utilizando volumes com permissão somente de leitura (ro)
+$ docker run -d -p <porta>:<porta> -v <host_local>:<local_container>:ro <nome_imagem>
+
+#Iniciar um container utilizando os dados do volume de outro container
+$ docker run -i -t --volumes-from <id_container_volumes> <nome_imagem>
+
+#Remover um volume
+$ docker rm	-v <volume_name>
+
+#Construir backup do diretório do container para o host
+Por	partes:	primeiro estamos criando um	novo container com acesso ao volume	de dados do	mysql e, em	seguida, estamos criando um	mapeamento	entre o	nosso host local e o novo container, de	forma que tudo o que for criado	no	diretório mapeado dentro deste novo	container esteja disponível	para o nosso host local.	
+
+$ docker run --volumes-from <id_container> -v \ $(pwd):/backup	ubuntu	tar	cvf	/backup/backup.tar	/var/lib/mysql
+
+#Restaurar backup em um novo container
+$ docker run --volumes-from <id_container> -v \ $(pwd):/backup busybox tar xvf /backup/backup.tar
+
+===================================Dockerfile======================================
+
+Exemplo:
+
+	FROM <imagem_base>
+	
+	MAINTAINER <informacoes_mantenedor>
+	
+	ENV	<nome_variavel>	<valor_variavel>
+	
+	RUN <comando_a_executar_pos_instalacao_I>
+
+	RUN <comando_a_executar_pos_instalacao_II>
+	
+	ADD <arquivo> <destino>
+	
+	WORKDIR <diretorio_de_trabalho>
+	
+	VOLUME	[<local_diretorio>]
+	
+	EXPOSE	80
+
+	CMD <comando_terminal>
+	
+	ENTRYPOINT	["<comando_terminal>"]
+
+Definições:
+
+		FROM – estamos escolhendo a	imagem base	para criar o container;	
+		MAINTAINER – especifica	o nome de quem vai manter a	imagem;	
+		ENV - declarar variáveis de ambiente;
+		RUN	– permite a	execução de	um comando no container.
+		ADD - copia um arquivo para o destino definido dentro do container.
+		WORKDIR - diretório de trabalho dentro do container.
+		VOLUME - Diretório onde podemos manipular arquivos de dados salvos;
+		EXPOSE - Expoe a porta do container.
+		CMD - comando a ser executado no terminal do container (chamando o bash	assim: /bin/sh -c. Em seguida, envia como parâmetro	o comando ou instrução que especificamos).
+		ENTRYPOINT - chama o comando ou	script diretamente, quando utilizamos ENTRYPOINT, tudo o que for especificado em CMD será enviado como complemento para ENTRYPOINT.
+		
+#Executar dockerfile - ponto final indica o path, supondo que está sendo executado onde o dockerfile se encontra
+$ docker build -t <nome_imagem> .		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
